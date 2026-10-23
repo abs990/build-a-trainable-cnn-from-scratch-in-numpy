@@ -186,7 +186,7 @@ def conv2d_grad_input(d_out, cache):
     d_out = d_out.transpose(0, 2, 3, 1).reshape(-1, C_out)
 
     return col2im(
-        d_out @ cache['weights'],
+        d_out @ cache['weights'].reshape(C_out, -1),
         cache['x_shape'], 
         cache['kernel_h'], 
         cache['kernel_w'], 
