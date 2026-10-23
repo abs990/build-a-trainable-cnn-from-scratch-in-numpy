@@ -30,8 +30,11 @@ def exp_shifted(logits):
     """Subtract per-row max from logits and exponentiate elementwise."""
     return np.exp(logits - row_max(logits))
 
-# Step 5 - stable_softmax (not yet solved)
-# TODO: implement
+# Step 5 - stable_softmax
+def stable_softmax(logits):
+    # Compute a numerically stable softmax row-wise over (N, C) logits.
+    logits = exp_shifted(logits)
+    return logits / row_sum(logits)
 
 # Step 6 - one_hot (not yet solved)
 # TODO: implement
