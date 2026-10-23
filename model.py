@@ -56,8 +56,10 @@ def cross_entropy_loss(probs, labels, eps=1e-12):
     class_probs = np.clip(gather_true_class_probs(probs, labels), eps, 1.0)
     return -np.mean(np.log(class_probs))
 
-# Step 9 - accuracy (not yet solved)
-# TODO: implement
+# Step 9 - accuracy
+def accuracy(logits_or_probs, labels):
+    # return the fraction of rows whose argmax matches the integer label.
+    return np.sum(argmax_rows(logits_or_probs) == labels) / labels.size
 
 # Step 10 - he_std (not yet solved)
 # TODO: implement
