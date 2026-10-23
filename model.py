@@ -61,8 +61,10 @@ def accuracy(logits_or_probs, labels):
     # return the fraction of rows whose argmax matches the integer label.
     return np.sum(argmax_rows(logits_or_probs) == labels) / labels.size
 
-# Step 10 - he_std (not yet solved)
-# TODO: implement
+# Step 10 - he_std
+def he_std(fan_in):
+    # return the He initialization standard deviation sqrt(2 / fan_in).
+    return float(np.sqrt(2.0 / fan_in))
 
 # Step 11 - he_init (not yet solved)
 # TODO: implement
