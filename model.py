@@ -43,8 +43,10 @@ def one_hot(labels, num_classes):
     one_hot[np.arange(labels.size), labels] = 1
     return one_hot
 
-# Step 7 - gather_true_class_probs (not yet solved)
-# TODO: implement
+# Step 7 - gather_true_class_probs
+def gather_true_class_probs(probs, labels):
+    # return probs[i, labels[i]] for every row i as a 1D length-N array.
+    return probs[np.arange(labels.size), labels]
 
 # Step 8 - cross_entropy_loss (not yet solved)
 # TODO: implement
