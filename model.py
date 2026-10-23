@@ -84,8 +84,10 @@ def pad_2d(images, pad):
     # zero-pad the spatial (H, W) dims of a 4D (N, C, H, W) tensor by `pad` on each side.
     return np.pad(images, pad_width=((0, 0), (0, 0), (pad, pad), (pad, pad)), constant_values=0)
 
-# Step 14 - output_spatial_size (not yet solved)
-# TODO: implement
+# Step 14 - output_spatial_size
+def output_spatial_size(input_size, kernel, stride, padding):
+    # return the conv/pool output spatial dimension from input_size, kernel, stride, padding
+    return int(1 + np.floor((input_size + 2 * padding - kernel) / stride))
 
 # Step 15 - im2col (not yet solved)
 # TODO: implement
