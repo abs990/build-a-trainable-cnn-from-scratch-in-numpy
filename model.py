@@ -165,8 +165,8 @@ def conv2d_forward(x, weights, bias, stride, padding):
     out_w =  output_spatial_size(W, kernel_w, stride, padding)
 
     cols = im2col(x, kernel_h, kernel_w, stride, padding) # (N * out_h * out_w, C_in * kernel_h * kernel_w)
-    weights = weights.reshape(C_out, -1)
-    out = ((cols @ weights.T) + bias).reshape(N, out_h, out_w, C_out).transpose(0, 3, 1, 2)
+    weights_flat = weights.reshape(C_out, -1)
+    out = ((cols @ weights_flat.T) + bias).reshape(N, out_h, out_w, C_out).transpose(0, 3, 1, 2)
 
     return out, {
         'x_shape': x.shape, 
@@ -206,8 +206,10 @@ def conv2d_grad_bias(d_out):
     # return a length C_out gradient by reducing d_out over batch and spatial axes
     return np.sum(d_out, axis=(0, 2, 3))
 
-# Step 21 - conv2d_backward (not yet solved)
-# TODO: implement
+# Step 21 - conv2d_backward
+def conv2d_backward(d_out, cache):
+    # return (dx, dW, db) using the conv2d gradient helpers and the forward cache
+    return conv2d_grad_input(d_out, cache), conv2d_grad_weights(d_out, cache), conv2d_grad_bias(d_out)
 
 # Step 22 - maxpool2d_forward (not yet solved)
 # TODO: implement
