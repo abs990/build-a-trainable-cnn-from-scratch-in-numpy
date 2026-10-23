@@ -117,8 +117,42 @@ def im2col(images, kernel_h, kernel_w, stride, padding):
 
     return images.reshape(N * out_h * out_w, C * kernel_h * kernel_w)
 
-# Step 16 - col2im (not yet solved)
-# TODO: implement
+# Step 16 - col2im
+def col2im(cols, input_shape, kernel_h, kernel_w, stride, padding):
+    # re-roll a (N*out_h*out_w, C*kh*kw) column matrix back into a (N, C, H, W) tensor
+    
+    # (N, out_h, out_w, C, kernel_h, kernel_w)
+    N_hat, C_hat = cols.shape
+    N, C, H, W = input_shape
+    H_pad = H + 2 * padding
+    W_pad = W + 2 * padding
+    
+    out_h = output_spatial_size(H, kernel_h, stride, padding)
+    out_w = output_spatial_size(H, kernel_w, stride, padding)
+
+    # (N, out_h, out_w, C, kernel_h, kernel_w)
+    cols = cols.reshape(N, out_h, out_w, C, kernel_h, kernel_w)
+
+    # (N, C, kernel_h, kernel_w, out_h, out_w)
+    cols = cols.transpose(0, 3, 4, 5, 1, 2)
+
+    # Accumulate overlapping patches
+    images = np.zeros((N, C, H_pad, W_pad), dtype=cols.dtype)
+
+    for i in range(kernel_h):
+        for j in range(kernel_w):
+            images[
+                :,
+                :,
+                i:i + out_h * stride:stride,
+                j:j + out_w * stride:stride
+            ] += cols[:, :, i, j, :, :]
+
+    # Remove padding
+    if padding > 0:
+        images = images[:, :, padding:-padding, padding:-padding]
+
+    return images
 
 # Step 17 - conv2d_forward (not yet solved)
 # TODO: implement
