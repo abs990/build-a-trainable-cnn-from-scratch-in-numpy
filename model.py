@@ -178,8 +178,20 @@ def conv2d_forward(x, weights, bias, stride, padding):
         'kernel_w': kernel_w
     }
 
-# Step 18 - conv2d_grad_input (not yet solved)
-# TODO: implement
+# Step 18 - conv2d_grad_input
+def conv2d_grad_input(d_out, cache):
+    # backprop d_out through the conv input using col2im
+
+    N, C_out, out_h, out_w = d_out.shape
+    d_out = d_out.transpose(0, 2, 3, 1).reshape(-1, C_out)
+
+    return col2im(
+        d_out @ cache['weights'],
+        cache['x_shape'], 
+        cache['kernel_h'], 
+        cache['kernel_w'], 
+        cache['stride'], 
+        cache['padding'])
 
 # Step 19 - conv2d_grad_weights (not yet solved)
 # TODO: implement
