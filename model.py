@@ -339,8 +339,11 @@ def linear_backward(dout, cache):
     # combine input, weight, and bias gradients for a linear layer using the cache
     return linear_grad_input(dout, cache), linear_grad_weights(cache['x'], dout), linear_grad_bias(dout)
 
-# Step 34 - softmax_cross_entropy_forward (not yet solved)
-# TODO: implement
+# Step 34 - softmax_cross_entropy_forward
+def softmax_cross_entropy_forward(logits, y):
+    # return the mean cross-entropy loss for logits (N, C) and integer labels y (N,).
+    
+    return float(abs(cross_entropy_loss(stable_softmax(logits), y)))
 
 # Step 35 - softmax_cross_entropy_backward (not yet solved)
 # TODO: implement
