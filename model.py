@@ -494,8 +494,20 @@ def backward_conv_block(dout, cache):
     grad = relu_backward(grad, cache['relu_cache'])
     return conv2d_backward(grad, cache['conv_cache'])
 
-# Step 49 - backward_classifier_block (not yet solved)
-# TODO: implement
+# Step 49 - backward_classifier_block
+def backward_classifier_block(dlogits, cache):
+    # backprop through fc2 -> relu -> fc1 -> flatten using the cached values
+    grads = {}
+
+    grads['fc2'] = {}
+    g, grads['fc2']['dW'], grads['fc2']['db'] = linear_backward(dlogits, cache['fc2_cache'])
+    
+    grads['fc1'] = {}
+    g, grads['fc1']['dW'], grads['fc1']['db'] = linear_backward(relu_backward(g, cache['relu_cache']), cache['fc1_cache'])
+    
+    grads['dx'] = flatten_backward(g, cache['flatten_cache'])
+    
+    return grads
 
 # Step 50 - lenet_backward (not yet solved)
 # TODO: implement
