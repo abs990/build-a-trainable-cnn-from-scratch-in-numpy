@@ -532,8 +532,19 @@ def lenet_predict(x, params):
     out, _ = lenet_forward(x, params)
     return argmax_rows(out)
 
-# Step 52 - build_synthetic_image_dataset (not yet solved)
-# TODO: implement
+# Step 52 - build_synthetic_image_dataset
+def build_synthetic_image_dataset(num_samples, num_classes, image_size, in_channels=1, seed=0):
+    # Return (x, y) for a reproducible synthetic NCHW image dataset.
+    rng = np.random.default_rng(seed)
+    
+    # sample
+    x = rng.standard_normal(size=(num_samples, in_channels, image_size, image_size))
+    y = rng.integers(0, num_classes, num_samples)
+
+    # shift
+    x += (y - 0.5 * (num_classes - 1))[:, None, None, None]
+
+    return x, y
 
 # Step 53 - shuffle_indices (not yet solved)
 # TODO: implement
