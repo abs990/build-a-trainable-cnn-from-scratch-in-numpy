@@ -303,8 +303,13 @@ def flatten_backward(d_out, cache):
     # reshape the upstream gradient back to the original 4D feature map shape.
     return d_out.reshape(cache['x_shape'])
 
-# Step 29 - linear_forward (not yet solved)
-# TODO: implement
+# Step 29 - linear_forward
+def linear_forward(x, weights, bias):
+    # compute X @ W + b and cache the inputs needed for backprop.
+    return x @ weights + bias, {
+        'x': x,
+        'weights': weights
+    }
 
 # Step 30 - linear_grad_input (not yet solved)
 # TODO: implement
