@@ -284,8 +284,11 @@ def relu_forward(x):
 
     return np.maximum(x.copy(), 0), {'x': x}
 
-# Step 26 - relu_backward (not yet solved)
-# TODO: implement
+# Step 26 - relu_backward
+def relu_backward(d_out, cache):
+    # mask the upstream gradient by the positive entries of the cached input.
+    d_out[cache['x'] <= 0] = 0
+    return d_out
 
 # Step 27 - flatten_forward (not yet solved)
 # TODO: implement
