@@ -404,8 +404,13 @@ def init_conv_layer(out_channels, in_channels, kernel_size, seed=0):
         'b': init_zero_bias(out_channels)
     }
 
-# Step 43 - init_linear_layer (not yet solved)
-# TODO: implement
+# Step 43 - init_linear_layer
+def init_linear_layer(in_features, out_features, seed=0):
+    # return {'W': He-init matrix (in_features, out_features), 'b': zero bias (out_features,)}
+    return {
+        'W': he_init((in_features, out_features), in_features, seed),
+        'b': init_zero_bias(out_features)
+    }
 
 # Step 44 - init_lenet (not yet solved)
 # TODO: implement
