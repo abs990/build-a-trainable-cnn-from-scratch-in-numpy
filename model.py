@@ -461,8 +461,30 @@ def forward_classifier_block(x, fc1, fc2):
     # return logits plus a cache dict.
     return out, cache_dict
 
-# Step 47 - lenet_forward (not yet solved)
-# TODO: implement
+# Step 47 - lenet_forward
+def lenet_forward(x, params):
+    # run two conv blocks then the classifier block and return (logits, caches).
+    
+    cache_dict = {}
+    out, cache_dict['block1'] = forward_conv_block(
+        x, 
+        params['conv1']['W'],
+        params['conv1']['b'],
+        2,
+        1,
+        0)
+    out, cache_dict['block2'] = forward_conv_block(
+        out, 
+        params['conv2']['W'],
+        params['conv2']['b'],
+        2,
+        1,
+        0)
+    out, cache_dict['classifier'] = forward_classifier_block(
+        out,
+        params['fc1'],
+        params['fc2'])
+    return out, cache_dict
 
 # Step 48 - backward_conv_block (not yet solved)
 # TODO: implement
